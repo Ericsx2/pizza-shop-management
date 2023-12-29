@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:16
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/postgresql/db_data
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 5432:5432
+    command:
+      - 'postgres'
+      - '-c'
+      - 'logging_collector=on'
+      - '-c'
+      - 'log_directory=/var/log/postgresql'
+      - '-c'
+      - 'log_truncate_on_rotation=off'
+      - '-c'
+      - 'log_rotation_age=1d'
+
+  api:
+    hostname: pizza_shop_management
+    container_name: pizza_shop_management_app
+    restart: always
+    depends_on:
+      - postgres
+    build:
+      context: .
+      network: host
+    ports:
+      - ${PORT}:${PORT}
+    env_file:
+      - .env
+
+volumes:
+  db_data:
