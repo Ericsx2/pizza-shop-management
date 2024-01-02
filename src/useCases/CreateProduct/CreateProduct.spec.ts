@@ -1,7 +1,6 @@
 import request from 'supertest';
-import { ZodIssue } from 'zod';
 import { execSync } from 'child_process';
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { faker } from '@faker-js/faker';
 import { app } from '../../app';
 

@@ -2,13 +2,17 @@ import request from 'supertest';
 
 import { faker } from '@faker-js/faker';
 import { execSync } from 'node:child_process';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { app } from '../../app';
 
 describe('Create User Use Case', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     execSync('pnpm migrate:rollback');
     execSync('pnpm migrate:run');
+  });
+
+  afterAll(() => {
+    execSync('pnpm migrate:rollback');
   });
 
   it('should be able to create new user', async () => {
