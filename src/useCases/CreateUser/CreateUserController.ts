@@ -14,8 +14,6 @@ export class CreateUserController {
     try {
       const data = createUserRequestSchema.parse(request.body);
 
-      console.log(this);
-
       const { message, status } = await this.createUserUseCase.execute(data);
 
       return response.status(status).json({ message });

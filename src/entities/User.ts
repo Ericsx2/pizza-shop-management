@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { v4 as uuid } from 'uuid';
 
 const userSchema = z.object({
   id: z.string().uuid().optional().readonly(),
@@ -25,7 +24,7 @@ export class User {
   constructor(props: UserProps) {
     const { id, name, username, password, role, createdAt, updatedAt } =
       userSchema.parse(props);
-    this.id = id ?? uuid();
+    this.id = id;
     this.name = name;
     this.username = username;
     this.password = password;
