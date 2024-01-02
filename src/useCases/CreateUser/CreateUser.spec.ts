@@ -3,6 +3,7 @@ import request from 'supertest';
 import { faker } from '@faker-js/faker';
 import { execSync } from 'node:child_process';
 import { beforeEach, describe, expect, it } from 'vitest';
+import { app } from '../../app';
 
 describe('Create User Use Case', () => {
   beforeEach(() => {
@@ -11,7 +12,7 @@ describe('Create User Use Case', () => {
   });
 
   it('should be able to create new user', async () => {
-    await request('http://localhost:3333')
+    await request(app)
       .post('/user')
       .set('Accept', 'application/json')
       .send({
@@ -33,7 +34,7 @@ describe('Create User Use Case', () => {
       password: faker.internet.password(),
     };
 
-    await request('http://localhost:3333')
+    await request(app)
       .post('/user')
       .set('Accept', 'application/json')
       .send(userData)
@@ -43,7 +44,7 @@ describe('Create User Use Case', () => {
         expect(message).toEqual('User created successfully');
       });
 
-    await request('http://localhost:3333')
+    await request(app)
       .post('/user')
       .set('Accept', 'application/json')
       .send(userData)

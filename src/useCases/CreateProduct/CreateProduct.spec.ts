@@ -1,17 +1,22 @@
 import request from 'supertest';
 import { ZodIssue } from 'zod';
 import { execSync } from 'child_process';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { faker } from '@faker-js/faker';
+import { app } from '../../app';
 
 describe('Create Product Use Case', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     execSync('pnpm migrate:rollback');
     execSync('pnpm migrate:run');
   });
 
+  afterAll(() => {
+    execSync('pnpm migrate:rollback');
+  });
+
   it('Should to able to create new product', async () => {
-    await request('http://localhost:3333')
+    await request(app)
       .post('/product')
       .set('Accept', 'application/json')
       .send({
@@ -27,7 +32,7 @@ describe('Create Product Use Case', () => {
   });
 
   it("should't create product without name", async () => {
-    await request('http://localhost:3333')
+    await request(app)
       .post('/product')
       .set('Accept', 'application/json')
       .send({
@@ -38,7 +43,7 @@ describe('Create Product Use Case', () => {
   });
 
   it("should't create product without price", async () => {
-    await request('http://localhost:3333')
+    await request(app)
       .post('/product')
       .set('Accept', 'application/json')
       .send({
