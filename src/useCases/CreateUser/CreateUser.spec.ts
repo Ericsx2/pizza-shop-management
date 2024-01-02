@@ -6,8 +6,8 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('Create User Use Case', () => {
   beforeEach(() => {
-    execSync('pnpm drizzle-kit drop');
-    execSync('pnpm migrate');
+    execSync('pnpm migrate:rollback');
+    execSync('pnpm migrate:run');
   });
 
   it('should be able to create new user', async () => {

@@ -1,17 +1,12 @@
 import { User } from '../entities/User';
 import { IUsersRepository } from './interfaces/IUsersRepository';
-import { IHttpResponse, ResponseHandler } from '../helpers/ResponseHandler';
-import { db } from '../db/connection';
-import { users } from '../db/schema';
-import { eq } from 'drizzle-orm';
+import { db } from '../database/connection';
 
 export class UsersRepository implements IUsersRepository {
   constructor() {}
 
   async findByUsername(username: string): Promise<User | undefined> {
-    const user = await db.query.users.findFirst({
-      where: eq(users.username, username),
-    });
+    const [user] = await db('users').select().where('username', '=', username);
 
     if (!user) return undefined;
 
@@ -19,30 +14,22 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async save(user: User): Promise<void> {
-    const userAlreadyExists = await this.findByUsername(user.username);
-
-    if (userAlreadyExists) {
-      await db
-        .update(users)
-        .set({
-          name: user.name,
-          username: user.username,
-          password: user.password,
-          updatedAt: new Date(),
-          role: user.role,
-        })
-        .where(eq(users.username, user.username));
+    if (user.id) {
+      await db('users').where('id', '=', user.id).update({
+        name: user.name,
+        username: user.username,
+        password: user.password,
+        role: user.role,
+        updated_at: new Date().toString(),
+      });
 
       return;
     }
 
-    await db.insert(users).values({
-      id: user.id as string,
+    await db('users').insert({
       name: user.name,
       username: user.username,
       password: user.password,
-      updatedAt: new Date(),
-      createdAt: user.createdAt,
       role: user.role,
     });
 

@@ -6,8 +6,8 @@ import { faker } from '@faker-js/faker';
 
 describe('Create Product Use Case', () => {
   beforeEach(() => {
-    execSync('pnpm drizzle-kit drop');
-    execSync('pnpm migrate');
+    execSync('pnpm migrate:rollback');
+    execSync('pnpm migrate:run');
   });
 
   it('Should to able to create new product', async () => {
