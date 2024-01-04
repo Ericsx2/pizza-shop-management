@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable('products', (table) => {
-    table.uuid('id').primary().defaultTo(uuid());
+    table.uuid('id').primary();
     table.text('name').notNullable();
     table.text('description');
     table.boolean('is_available').defaultTo('true');

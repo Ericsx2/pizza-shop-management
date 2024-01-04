@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid';
 import { db } from '../database/connection';
 import { Product } from '../entities/Product';
 import { IProductsRepository } from './interfaces/IProductsRepository';
@@ -18,6 +19,7 @@ export class ProductsRepository implements IProductsRepository {
     }
 
     await db('products').insert({
+      id: uuid(),
       name: product.name,
       description: product.description,
       is_available: product.isAvailable,
