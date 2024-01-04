@@ -1,4 +1,4 @@
-import { userLoginController } from '../useCases/UserLoginUseCase';
+import { userLoginController } from '../useCases/UserLogin';
 import { Router } from 'express';
 
 const userLoginRouter = Router();
