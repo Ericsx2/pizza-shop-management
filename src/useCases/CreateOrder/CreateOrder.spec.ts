@@ -52,4 +52,28 @@ describe('Create Order Use Case', () => {
       })
       .expect(201);
   });
+
+  it("Shouldn't able to create order without waiter id", async () => {
+    await request(app)
+      .post('/order')
+      .set('Accept', 'application/json')
+      .send({
+        total: faker.number.int({ max: 200 }),
+        orderIdentifier: 'Mesa 2',
+        observations: 'Sem palmito',
+      })
+      .expect(400);
+  });
+
+  it("Shouldn't able to create order without order identifier", async () => {
+    await request(app)
+      .post('/order')
+      .set('Accept', 'application/json')
+      .send({
+        total: faker.number.int({ max: 200 }),
+        waiterId: data.user_id,
+        observations: 'Sem palmito',
+      })
+      .expect(400);
+  });
 });
