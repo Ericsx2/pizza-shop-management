@@ -22,5 +22,15 @@ declare module 'knex/types/tables' {
       created_at: string;
       updated_at: string;
     };
+
+    orders: {
+      id: string | undefined;
+      waiter_id: string;
+      order_identifier: string | undefined | null;
+      observations: string | undefined | null;
+      status: 'PENDING' | 'ONGOING' | 'FINISHED';
+      total: number;
+      created_at: string | undefined | null;
+    };
   }
 }
