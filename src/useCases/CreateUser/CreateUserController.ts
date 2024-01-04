@@ -14,9 +14,9 @@ export class CreateUserController {
     try {
       const data = createUserRequestSchema.parse(request.body);
 
-      const { message, status } = await this.createUserUseCase.execute(data);
+      const { body, status } = await this.createUserUseCase.execute(data);
 
-      return response.status(status).json({ message });
+      return response.status(status).json(body);
     } catch (err) {
       console.log(err);
       if (err instanceof ZodError) {
