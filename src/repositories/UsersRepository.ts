@@ -21,7 +21,7 @@ export class UsersRepository implements IUsersRepository {
         username: user.username,
         password: user.password,
         role: user.role,
-        updated_at: new Date().toString(),
+        updated_at: new Date().toISOString(),
       });
 
       return;

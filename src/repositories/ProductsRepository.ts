@@ -12,7 +12,7 @@ export class ProductsRepository implements IProductsRepository {
         is_available: product.isAvailable,
         price: product.price,
         image_url: product.imageUrl,
-        updated_at: new Date().toString(),
+        updated_at: new Date().toISOString(),
       });
 
       return;
