@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid';
 import { User } from '../entities/User';
 import { IUsersRepository } from './interfaces/IUsersRepository';
 import { db } from '../database/connection';
@@ -27,6 +28,7 @@ export class UsersRepository implements IUsersRepository {
     }
 
     await db('users').insert({
+      id: uuid(),
       name: user.name,
       username: user.username,
       password: user.password,

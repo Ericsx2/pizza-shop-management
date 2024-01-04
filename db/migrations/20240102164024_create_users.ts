@@ -1,9 +1,8 @@
 import type { Knex } from 'knex';
-import { v4 as uuid } from 'uuid';
 
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable('users', (table) => {
-    table.uuid('id').primary().defaultTo(uuid());
+    table.uuid('id').primary();
     table.text('name').notNullable();
     table.text('username').notNullable().unique();
     table.text('password').notNullable();
