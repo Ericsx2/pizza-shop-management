@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "db:seed": "tsnd ./src/database/seeders/*",
     "migrate:run": "pnpm knex migrate:latest",
     "migrate:rollback": "pnpm knex migrate:rollback --all",
     "dev": "tsnd --transpile-only --respawn src/server.ts",
