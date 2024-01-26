@@ -7,16 +7,6 @@ import { db } from '../../database/connection';
 import { getUser, getUserToken } from '../../tests/utils/user';
 
 describe('Create Order Use Case', () => {
-  beforeAll(() => {
-    execSync('pnpm migrate:rollback');
-    execSync('pnpm migrate:run');
-    execSync('pnpm db:seed');
-  });
-
-  afterAll(() => {
-    execSync('pnpm migrate:rollback');
-  });
-
   it('Should be able to create a order', async () => {
     const user = await getUser();
 

@@ -1,20 +1,11 @@
 import request from 'supertest';
 
 import { faker } from '@faker-js/faker';
-import { execSync } from 'node:child_process';
-import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { app } from '../../app';
+import { getUser } from '../../tests/utils/user';
 
 describe('Create User Use Case', () => {
-  beforeAll(() => {
-    execSync('pnpm migrate:rollback');
-    execSync('pnpm migrate:run');
-  });
-
-  afterAll(() => {
-    execSync('pnpm migrate:rollback');
-  });
-
   it('should be able to create new user', async () => {
     await request(app)
       .post('/user')
@@ -32,9 +23,11 @@ describe('Create User Use Case', () => {
   });
 
   it("shouldn't create user with the same username", async () => {
+    const user = await getUser();
+
     const userData = {
       name: faker.person.fullName(),
-      username: 'username',
+      username: user.username,
       password: faker.internet.password(),
     };
 
@@ -42,10 +35,10 @@ describe('Create User Use Case', () => {
       .post('/user')
       .set('Accept', 'application/json')
       .send(userData)
-      .expect(201)
+      .expect(309)
       .then((response) => {
         const { message } = response.body;
-        expect(message).toEqual('User created successfully');
+        expect(message).toEqual('User Already Exists');
       });
 
     await request(app)
