@@ -8,7 +8,6 @@ describe('List Products use Case', () => {
   beforeAll(() => {
     execSync('pnpm migrate:rollback');
     execSync('pnpm migrate:run');
-    execSync('pnpm tsnd src/database/seeders/Product.ts');
   });
 
   afterAll(() => {
