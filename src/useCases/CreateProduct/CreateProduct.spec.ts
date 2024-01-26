@@ -3,11 +3,13 @@ import { execSync } from 'child_process';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { faker } from '@faker-js/faker';
 import { app } from '../../app';
+import { getUserToken } from '../../tests/utils/user';
 
 describe('Create Product Use Case', () => {
   beforeAll(() => {
     execSync('pnpm migrate:rollback');
     execSync('pnpm migrate:run');
+    execSync('pnpm db:seed');
   });
 
   afterAll(() => {
@@ -15,9 +17,12 @@ describe('Create Product Use Case', () => {
   });
 
   it('Should to able to create new product', async () => {
+    const token = await getUserToken();
+
     await request(app)
       .post('/product')
       .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
       .send({
         name: faker.commerce.productName(),
         description: faker.commerce.productDescription(),
@@ -31,9 +36,12 @@ describe('Create Product Use Case', () => {
   });
 
   it("should't create product without name", async () => {
+    const token = await getUserToken();
+
     await request(app)
       .post('/product')
       .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
       .send({
         description: faker.commerce.productDescription(),
         price: faker.number.float({ min: 0.1, max: 100, precision: 2 }),
@@ -42,9 +50,12 @@ describe('Create Product Use Case', () => {
   });
 
   it("should't create product without price", async () => {
+    const token = await getUserToken();
+
     await request(app)
       .post('/product')
       .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
       .send({
         name: faker.commerce.productName(),
         description: faker.commerce.productDescription(),
