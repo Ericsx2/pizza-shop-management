@@ -1,21 +1,21 @@
 import { z } from 'zod';
 
 export const orderSchema = z.object({
-  id: z.string().optional(),
+  id: z.string().nullish(),
   waiterId: z.string(),
   orderIdentifier: z.string(),
-  observations: z.string().optional().nullable(),
+  observations: z.string().nullish(),
   status: z.enum(['PENDING', 'ONGOING', 'FINISHED']).default('PENDING'),
   total: z.number(),
-  createdAt: z.date().optional().nullable(),
+  createdAt: z.date().nullish(),
 });
 
 export type OrderProps = z.infer<typeof orderSchema>;
 
 export class Order {
-  public readonly id: string | undefined;
+  public readonly id: string | undefined | null;
   public waiterId: string;
-  public orderIdentifier: string | undefined | null;
+  public orderIdentifier: string;
   public observations: string | undefined | null;
   public status: 'PENDING' | 'ONGOING' | 'FINISHED';
   public total: number;

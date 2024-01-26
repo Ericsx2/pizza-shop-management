@@ -1,5 +1,5 @@
-import { Order } from '@/entities/Order';
+import { Order } from '../../entities/Order';
 
 export interface IOrdersRepository {
-  save(order: Order): Promise<void>;
+  save(order: Order): Promise<Order>;
 }

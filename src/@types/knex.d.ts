@@ -24,11 +24,20 @@ declare module 'knex/types/tables' {
     };
 
     orders: {
-      id: string | undefined;
+      id: string;
       waiter_id: string;
-      order_identifier: string | undefined | null;
+      order_identifier: string;
       observations: string | undefined | null;
       status: 'PENDING' | 'ONGOING' | 'FINISHED';
+      total: number;
+      created_at: string;
+    };
+
+    order_items: {
+      id: string | undefined;
+      product_id: string | null;
+      order_id: string;
+      quantity: number;
       total: number;
       created_at: string | undefined | null;
     };
